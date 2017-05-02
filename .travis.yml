@@ -6,10 +6,13 @@ env:
 - TOX_ENV=py33
 - TOX_ENV=py27
 - TOX_ENV=flake8
+before_install:
+  - sudo apt-get -qq update
+  - sudo apt-get install -y python-stdeb
 install:
 - pip install tox
 script:
-- tox -e $TOX_ENV && python2.7 setup.py --command-packages=stdeb.command bdist_deb
+- tox -e $TOX_ENV && python setup.py --command-packages=stdeb.command bdist_deb
 deploy:
   provider: releases
   api_key:
