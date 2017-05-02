@@ -1,12 +1,19 @@
 language: python
 python: 3.5
 env:
- - TOX_ENV=py35
- - TOX_ENV=py34
- - TOX_ENV=py33
- - TOX_ENV=py27
- - TOX_ENV=flake8
+- TOX_ENV=py35
+- TOX_ENV=py34
+- TOX_ENV=py33
+- TOX_ENV=py27
+- TOX_ENV=flake8
 install:
- - pip install tox
+- pip install tox
 script:
- - tox -e $TOX_ENV
+- tox -e $TOX_ENV && python2.7 setup.py --command-packages=stdeb.command bdist_deb
+deploy:
+  provider: releases
+  api_key:
+    secure: TAzw9GUSFb7qGEhnBq9fkU4hBryQrH7h7JnczXAzgVvUAPCldwTBFDdWhIzubhwQu5xmNWmBq+69fFiGRK6yAQRHyVxx+pWw33bk2na9Urp/rzCFO57ovDqL39gVplqMw1bFxA03yz6qr9OH8T/mCBopCD2f9ry72tndmTf5DzSz+n5Lt+xHTx89aKRMPyN2zNXTN9KyKrY358Ce1nKXz/znAo/5+OxGJ511ydxTEAMUDYBSN+5QEA6UBNCLGPqZbe0Nw8qMqv/GotNQ69+aTsANfNSsxeiMWAMlS7JAEjxkFRgc10UY71yjOZNLYuAfudz8aKiQQbuj9qBbhyAkmNAM8fprt+3UpqkxNhDdU7IHXpjbO+2yUjWLbSoHlBMKHSl8UAZZuzrvPVbAY7OECKHzVPAKcwogNOq+RKguth04h8x0LorviXYITZR+Pz2iXRZ6iQSXJgkJ7ZLesvwiYzu6NEBRiUzkKfNH/k0i3guT0i5VRB5b/Y4Etkr76zOh8RLxoPPVHhV81C20tX6xIgsqX4OeFeoou89uOAmQL/uVC0WAqaYHaP86QmoYkvXqRCkpsjyEf0DWUaenWsZKeRabBJ2VdcBi4+hZencdyn4lKLjs6MMDGEAPxl5174ShB9QLh0PVzl8b5OHww4Wf+9JZaS9by5XASWwvVxrCIQE=
+  file: deb_dist/python-libconf_1.0.1-1_all.deb
+  on:
+    repo: Kalyzee/python-libconf
